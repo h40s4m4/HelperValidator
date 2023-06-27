@@ -16,10 +16,10 @@ use function sprintf;
 final class StringValidator
 {
     /**
-     * Checks if the delivered value is a STRING and is not EMPTY. The $value field supports any value type.
+     * Checks if the provided value is a STRING and is not EMPTY. The $value field supports any value type.
      *
-     * IF it is a valid STRING, it returns TRUE.
-     * It is NOT a valid STRING or is EMPTY, it returns FALSE.
+     * IF it is a valid STRING, returns TRUE.
+     * It is NOT a valid STRING or is EMPTY, returns FALSE.
      *
      * @param mixed $value
      * @param bool  $hardException
@@ -45,7 +45,7 @@ final class StringValidator
     }
 
     /**
-     * Checks if the supplied String matches the regular expression. If there is at least one match, it returns TRUE, otherwise it returns FALSE.
+     * Checks if the provided String matches the regular expression. If there is at least one match, it returns TRUE, otherwise it returns FALSE.
      *
      * @param string $value
      * @param string $regularExpression
