@@ -42,4 +42,34 @@ final class ArrayValidator
 
         return $isArray;
     }
+
+    /**
+     * Checks if the provided KEY is in ARRAY.
+     *
+     * IF it exists KEY in ARRAY, it returns TRUE.
+     * IF NOT it exists KEY in ARRAY, it returns FALSE.
+     *
+     * @param array  $array
+     * @param string $keyName
+     * @param bool   $hardException
+     *
+     * @return bool
+     *
+     * @throws InvalidArgumentException In case $value is not a valid ARRAY and the flag $hardException = true.
+     */
+    public static function checkIfKeyExists(array $array, string $keyName, bool $hardException = FALSE): bool
+    {
+        $isValidKey = TRUE;
+        try {
+            Assert::keyExists($array, $keyName, sprintf('La llave [%s] no se encuentra dentro del Array', safe_json_encode($keyName)));
+        } catch (WebmozartException|SafeJsonException $e) {
+            if (TRUE === $hardException) {
+                throw new InvalidArgumentException($e->getMessage());
+            }
+
+            $isValidKey = FALSE;
+        }
+
+        return $isValidKey;
+    }
 }
