@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ArtekSoft\HelperValidator\Extras;
 
-use ArtekSoft\HelperValidator\Validators\StringValidator;
 use InvalidArgumentException;
 use Safe\Exceptions\JsonException as SafeJsonException;
 use Safe\Exceptions\PcreException as SafePcreException;
@@ -13,37 +12,44 @@ use function Safe\json_encode as safe_json_encode;
 use function Safe\preg_match as safe_preg_match;
 use function sprintf;
 
+/**
+ * Use thecodingmachine/safe functions.
+ * A set of core PHP functions rewritten to throw exceptions instead of returning false when an error is encountered.
+ */
 final class SafeFunctions
 {
+    private const SAFE_PREG_MATCH_MESSAGE   = 'Error en la evaluación de expresión regular: %s';
+    private const SAFE_JSON_ENCODE_MESSAGE  = 'Error al ejecutar JsonEncode: %s';
+
     /**
-     * Execute the preg_match function in safe mode.
+     * Execute the preg_match function in safe mode. It's assumed that the input values are valid and correct.
+     * Returns:
+     *      - If valid, return TRUE.
+     *      - If NOT valid, return false.
      *
-     * @param mixed $valueString
-     * @param mixed $regularExpression
      *
-     * @return int
+     * @param string $valueString
+     * @param string $regularExpression
+     *
+     * @return bool
      *
      * @throws InvalidArgumentException In case of the preg_match function throws error.
      */
-    public static function safePregMatch(mixed $valueString, mixed $regularExpression): int
+    public static function safeBasicPregMatch(string $valueString, string $regularExpression): bool
     {
-        // Check value and regular expression are valid String.
-        StringValidator::checkIsStringNonEmpty($valueString, TRUE);
-        StringValidator::checkIsStringNonEmpty($regularExpression, TRUE);
-
         try {
             $evaluatedValue = safe_preg_match($regularExpression, $valueString);
         } catch (SafePcreException $e) {
             throw new InvalidArgumentException(
-                sprintf('Error en la evaluación de expresión regular: %s', $e->getMessage()),
+                sprintf(self::SAFE_PREG_MATCH_MESSAGE, $e->getMessage()),
             );
         }
 
-        return $evaluatedValue;
+        return $evaluatedValue === 1;
     }
 
     /**
-     * Execute the json_encode function in safe mode.
+     * Execute the json_encode function in safe mode. It's assumed that the input values are valid and correct.
      *
      * @param string $valueString
      *
@@ -53,14 +59,11 @@ final class SafeFunctions
      */
     public static function safeJsonEncode(string $valueString): string
     {
-        // Check value are valid String.
-        StringValidator::checkIsStringNonEmpty($valueString, TRUE);
-
         try {
             $jsonValueString = safe_json_encode($valueString);
         } catch (SafeJsonException $e) {
             throw new InvalidArgumentException(
-                sprintf('Error al ejecutar JsonEncode: %s', $e->getMessage()),
+                sprintf(self::SAFE_JSON_ENCODE_MESSAGE, $e->getMessage()),
             );
         }
 

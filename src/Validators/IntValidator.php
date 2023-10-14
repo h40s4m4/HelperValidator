@@ -14,8 +14,10 @@ use function sprintf;
 
 final class IntValidator
 {
+    private const INT_NON_EMPTY_EXCEPTION_MESSAGE = 'El campo [%s] se encuentra vacío o no es un INT válido';
+
     /**
-     * Checks if the delivered value is an INT and is not EMPTY. The $value field supports any value type.
+     * Checks if the provided value is an INT and is not EMPTY. The $value field supports any value type.
      *
      * IF it is a valid INT, it returns TRUE.
      * It is NOT a valid INT or is EMPTY, it returns FALSE.
@@ -31,7 +33,7 @@ final class IntValidator
     {
         $isInt = TRUE;
         try {
-            Assert::integer($value, sprintf('El campo [%s] se encuentra vacío o no es un INT válido', safe_json_encode($value)));
+            Assert::integer($value, sprintf(self::INT_NON_EMPTY_EXCEPTION_MESSAGE, safe_json_encode($value)));
         } catch (WebmozartException|SafeJsonException $e) {
             if (TRUE === $hardException) {
                 throw new InvalidArgumentException($e->getMessage());

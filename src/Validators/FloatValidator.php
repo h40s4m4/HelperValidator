@@ -14,8 +14,10 @@ use function sprintf;
 
 final class FloatValidator
 {
+    private const FLOAT_NON_EMPTY_EXCEPTION_MESSAGE = 'El campo [%s] se encuentra vacío o no es un FLOAT válido';
+
     /**
-     * Checks if the delivered value is a FLOAT and is not EMPTY. The $value field supports any value type.
+     * Checks if the provided value is a FLOAT and is not EMPTY. The $value field supports any value type.
      *
      * IF it is a valid FLOAT, it returns TRUE.
      * It is NOT a valid FLOAT or is EMPTY, it returns FALSE.
@@ -31,7 +33,7 @@ final class FloatValidator
     {
         $isFloat = TRUE;
         try {
-            Assert::float($value, sprintf('El campo [%s] se encuentra vacío o no es un FLOAT válido', safe_json_encode($value)));
+            Assert::float($value, sprintf(self::FLOAT_NON_EMPTY_EXCEPTION_MESSAGE, safe_json_encode($value)));
         } catch (WebmozartException|SafeJsonException $e) {
             if (TRUE === $hardException) {
                 throw new InvalidArgumentException($e->getMessage());
