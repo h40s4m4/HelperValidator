@@ -14,7 +14,6 @@ use function sprintf;
 
 final class StringValidator
 {
-
     private const STRING_NON_EMPTY_EXCEPTION_MESSAGE = 'El campo [%s] se encuentra vacío o no es un string válido';
 
     /**

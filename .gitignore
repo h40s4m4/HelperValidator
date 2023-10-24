@@ -194,7 +194,6 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/phpstorm,symfony,composer
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
-/phpcs.xml
 ###< squizlabs/php_codesniffer ###
 
 ###> symfony/phpunit-bridge ###

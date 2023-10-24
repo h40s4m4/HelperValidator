@@ -30,7 +30,6 @@ final class SafeFunctions
      *      - If valid, return TRUE.
      *      - If NOT valid, return false.
      *
-     *
      * @param string $valueString
      * @param string $regularExpression
      *

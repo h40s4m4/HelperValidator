@@ -53,8 +53,8 @@ final class SafeFunctionsTest extends TestCase
     public function safePregMatchProvider(): array
     {
         return [
-            'normal_rut'    => ['test_value_string' => '17168421-8', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => true],
-            'normal_string' => ['test_value_string' => '123', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => false],
+            'normal_rut'    => ['test_value_string' => '17168421-8', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => TRUE],
+            'normal_string' => ['test_value_string' => '123', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => FALSE],
         ];
     }
 
