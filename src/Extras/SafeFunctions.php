@@ -53,13 +53,13 @@ final class SafeFunctions
     /**
      * Execute the json_encode function in safe mode. It's assumed that the input values are valid and correct.
      *
-     * @param string $valueString
+     * @param mixed $valueString
      *
      * @return string
      *
      * @throws InvalidArgumentException In case of the json_encode function throws error.
      */
-    public static function safeJsonEncode(string $valueString): string
+    public static function safeJsonEncode(mixed $valueString): string
     {
         try {
             $jsonValueString = safe_json_encode($valueString);
