@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace ArtekSoft\HelperValidator\Extras;
 
 use InvalidArgumentException;
+use Safe\DateTime as SafeDateTime;
+use Safe\Exceptions\DatetimeException as SafeDateTimeException;
 use Safe\Exceptions\JsonException as SafeJsonException;
 use Safe\Exceptions\PcreException as SafePcreException;
 
@@ -18,8 +20,9 @@ use function sprintf;
  */
 final class SafeFunctions
 {
-    private const SAFE_PREG_MATCH_MESSAGE   = 'Error en la evaluación de expresión regular: %s';
-    private const SAFE_JSON_ENCODE_MESSAGE  = 'Error al ejecutar JsonEncode: %s';
+    private const SAFE_PREG_MATCH_MESSAGE       = 'Error en la evaluación de expresión regular: %s';
+    private const SAFE_JSON_ENCODE_MESSAGE      = 'Error al ejecutar JsonEncode: %s';
+    private const SAFE_DATE_FROM_FORMAT_MESSAGE = 'El string [%s], para el formato formato [%s] no es válido como una fecha, con el error: %s';
 
     /**
      * Execute the preg_match function in safe mode. It's assumed that the input values are valid and correct.
@@ -68,5 +71,33 @@ final class SafeFunctions
         }
 
         return $jsonValueString;
+    }
+
+    /**
+     * Execute the createFromFormat of DateTime in safe mode. It's assumed that the input values are valid and correct.
+     *
+     * @param string $stringDate
+     * @param string $format
+     *
+     * @return SafeDateTime
+     *
+     * @throws InvalidArgumentException In case of the json_encode function throws error.
+     */
+    public static function safeDateFromFormat(string $stringDate, string $format): SafeDateTime
+    {
+        try {
+            $dateTimeValue = SafeDateTime::createFromFormat($format, $stringDate);
+        } catch (SafeDateTimeException $e) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    self::SAFE_DATE_FROM_FORMAT_MESSAGE,
+                    $stringDate,
+                    $format,
+                    $e->getMessage(),
+                ),
+            );
+        }
+
+        return $dateTimeValue;
     }
 }

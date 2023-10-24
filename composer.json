@@ -37,6 +37,7 @@
     }
   },
   "scripts": {
+    "csstatus": "phpcs --help",
     "csfix": "phpcbf --ignore=src/Migrations/**,src/Kernel.php",
     "cscheck": "phpcs --ignore=src/Migrations/**,src/Kernel.php -s",
     "executetest": "php ./vendor/bin/phpunit ./tests"

@@ -23,7 +23,7 @@ final class SafeFunctionsTest extends TestCase
      */
     public function testSafePregMatch(mixed $testValueString, mixed $testRegularExpression, mixed $testExpectedResult): void
     {
-        $result = SafeFunctions::safePregMatch($testValueString, $testRegularExpression);
+        $result = SafeFunctions::safeBasicPregMatch($testValueString, $testRegularExpression);
         $this->assertSame($testExpectedResult, $result);
     }
 
@@ -38,7 +38,7 @@ final class SafeFunctionsTest extends TestCase
     public function testSafePregMatchExceptions(mixed $testValueString, mixed $testRegularExpression): void
     {
         $this->expectException(InvalidArgumentException::class);
-        SafeFunctions::safePregMatch($testValueString, $testRegularExpression);
+        SafeFunctions::safeBasicPregMatch($testValueString, $testRegularExpression);
     }
 
     ###############################################################
@@ -53,8 +53,8 @@ final class SafeFunctionsTest extends TestCase
     public function safePregMatchProvider(): array
     {
         return [
-            'normal_rut'    => ['test_value_string' => '17168421-8', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => 1],
-            'normal_string' => ['test_value_string' => '123', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => 0],
+            'normal_rut'    => ['test_value_string' => '17168421-8', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => true],
+            'normal_string' => ['test_value_string' => '123', 'test_regular_expression' => self::RUT_REGULAR_EXPRESSION, 'test_expected_result' => false],
         ];
     }
 
