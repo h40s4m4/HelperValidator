@@ -28,7 +28,7 @@ final class SymfonyRequestHelperService
     public static function getFromPostRequest(Request $request, string $key, bool $hardException = FALSE): string|int|bool|float|array|null
     {
         if ($request->request->has($key)) {
-            return $request->request->get($key);
+            return $request->get($key);
         }
 
         if (TRUE === $hardException) {
